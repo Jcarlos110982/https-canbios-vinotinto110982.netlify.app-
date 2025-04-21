@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>WorldCoin Exchange Venezuela</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            padding-bottom: 70px;
+        }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        .logo {
+            width: 100%;
+            text-align: center;
+            margin: 15px 0 25px;
+        }
+
+        .logo img {
+            max-width: 180px;
+            height: auto;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
+        }
+
+        h2 {
+            color: #800020;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-title {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+        input:focus, select:focus {
+            border-color: #800020;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(128, 0, 32, 0.1);
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #800020;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.2s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #5a0017;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .input-icon {
+            position: relative;
+        }
+
+        .input-icon i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #800020;
+            font-size: 18px;
+        }
+
+        .currency-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #800020;
+            margin: 5px 0;
+            font-weight: 600;
+        }
+
+        .currency-label i {
+            font-size: 18px;
+        }
+
+        .pago-movil-container {
+            margin: 20px 0;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            background: #f8f9fa;
+        }
+
+        details {
+            margin-bottom: 10px;
+        }
+
+        summary {
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .selected-banco {
+            margin-top: 15px;
+            padding: 12px;
+            background: #e8f5e9;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #2e7d32;
+            font-weight: 500;
+        }
+
+        .selected-banco i {
+            color: #2e7d32;
+        }
+
+        /* Estilos para el historial */
+        .transaccion-item {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .transaccion-fecha {
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .transaccion-monto {
+            font-weight: bold;
+            color: #800020;
+            text-align: right;
+        }
+
+        .error-message {
+            color: #d32f2f;
+            font-size: 13px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .error-input {
+            border-color: #d32f2f !important;
+        }
+
+        /* Navegación inferior mejorada */
+        .nav-icons {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-icon {
+            text-align: center;
+            cursor: pointer;
+            color: #800020;
+            font-size: 12px;
+            padding: 5px;
+            flex: 1;
+            transition: color 0.3s;
+        }
+
+        .nav-icon i {
+            font-size: 20px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .nav-icon:hover {
+            color: #5a0017;
+        }
+
+        /* Modal de bancos mejorado */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            max-height: 70vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .close-modal {
+            float: right;
+            cursor: pointer;
+            font-size: 24px;
+            color: #666;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: #333;
+        }
+
+        .banco-option {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .banco-option:hover {
+            background: #f5f5f5;
+        }
+
+        .banco-code {
+            width: 40px;
+            color: #800020;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        /* Mejoras para términos y condiciones */
+        .terms-container {
+            margin: 15px 0;
+            padding: 15px;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            max-height: 150px;
+            overflow-y: auto;
+            font-size: 13px;
+            line-height: 1.5;
+            background: #f8f9fa;
+        }
+
+        .terms-title {
+            color: #800020;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .terms-checkbox {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+        }
+
+        .terms-checkbox input {
+            width: auto;
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+        /* Resumen de confirmación mejorado */
+        .resumen-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 12px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .resumen-titulo {
+            color: #800020;
+            font-weight: bold;
+            margin: 20px 0 10px;
+            font-size: 16px;
+        }
+
+        .resumen-valor {
+            font-weight: 600;
+        }
+
+        .seccion-resumen {
+            margin-bottom: 20px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+
+        /* Efectos de carga */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .active-page {
+            display: block;
+        }
+
+        /* Tasa actual */
+        .tasa-actual {
+            text-align: center;
+            margin: 10px 0;
+            font-size: 14px;
+            color: #800020;
+            font-weight: 600;
+        }
+
+        /* Sección remitente */
+        .remitente-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+
+        .remitente-title {
+            color: #800020;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        /* Responsive adjustments */
+        @media (min-width: 500px) {
+            .container {
+                max-width: 500px;
+                padding: 20px;
+            }
+            
+            .logo img {
+                max-width: 220px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Página 1 - Intercambio -->
+        <div id="page1" class="page active-page">
+            <div class="logo">
+                <img src="https://i.ibb.co/DPpGg1HJ/Photoroom-20250123-190034.png" alt="WorldCoin Exchange">
+            </div>
+            
+            <div class="card">
+                <h2>Intercambio WLD a VES</h2>
+                
+                <div class="tasa-actual" id="tasaActualContainer">
+                    <i class="fas fa-sync-alt fa-spin"></i> Obteniendo tasas actuales...
+                </div>
+                
+                <div class="input-group">
+                    <div class="input-title">Cantidad de WLD a intercambiar</div>
+                    <div class="input-icon">
+                        <input type="number" id="monedas" placeholder="Ej: 10" inputmode="decimal">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div id="monedas-error" class="error-message">Por favor ingrese una cantidad válida</div>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-title">Total a recibir en Bs.</div>
+                    <div class="input-icon">
+                        <input type="text" id="bolivares" placeholder="Calculado automáticamente" readonly>
+                        <i class="fas fa-b"></i>
+                    </div>
+                </div>
+
+                <div class="pago-movil-container">
+                    <details>
+                        <summary>Información de Pago Móvil ▼</summary>
+                        <button onclick="mostrarModalBancos()" style="margin-top: 10px; background: #4a6baf;">
+                            <i class="fas fa-university"></i> Seleccionar banco
+                        </button>
+                        <div id="selectedBanco" class="selected-banco" style="display: none;">
+                            <i class="fas fa-check-circle"></i>
+                            <span id="selectedBancoText"></span>
+                        </div>
+                    </details>
+                </div>
+
+                <button onclick="validarPagina1()">
+                    <i class="fas fa-arrow-right"></i> Continuar
+                </button>
+            </div>
+        </div>
+
+        <!-- Página 2 - Datos Personales -->
+        <div id="page2" class="page">
+            <div class="card">
+                <h2>Datos Personales</h2>
+                
+                <div class="remitente-section">
+                    <div class="remitente-title">Remitente</div>
+                    
+                    <div class="input-group">
+                        <div class="input-title">Nombre completo del remitente</div>
+                        <input type="text" placeholder="Ej: Juan Pérez" id="nombre-remitente">
+                        <div id="nombre-remitente-error" class="error-message">Por favor ingrese el nombre completo del remitente</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <div class="input-title">Cédula del remitente</div>
+                        <input type="text" placeholder="Ej: V-12345678" id="cedula-remitente" maxlength="10">
+                        <div id="cedula-remitente-error" class="error-message">Por favor ingrese una cédula válida (mínimo 8 dígitos)</div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <div class="input-title">Relación con el destinatario</div>
+                        <button onclick="mostrarModalRelacion()" style="margin-top: 5px;">
+                            <i class="fas fa-user-friends"></i> Seleccionar relación
+                        </button>
+                        <div id="selectedRelacion" class="selected-banco" style="display: none; margin-top: 10px;">
+                            <i class="fas fa-check-circle"></i>
+                            <span id="selectedRelacionText"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <div class="input-title">Nombre completo del destinatario</div>
+                    <input type="text" placeholder="Ej: María Rodríguez" id="nombre">
+                    <div id="nombre-error" class="error-message">Por favor ingrese su nombre completo (mínimo 2 nombres)</div>
+                </div>
+                
+                <div class="input-group">
+                    <div class="input-title">Número de cédula del destinatario</div>
+                    <input type="text" placeholder="Ej: V-12345678" id="cedula" maxlength="10">
+                    <div id="cedula-error" class="error-message">Por favor ingrese una cédula válida (mínimo 8 dígitos)</div>
+                </div>
+                
+                <div class="input-group">
+                    <div class="input-title">Teléfono para pago móvil</div>
+                    <input type="text" placeholder="Ej: 0412-1234567" id="telefono" maxlength="12">
+                    <div id="telefono-error" class="error-message">Por favor ingrese un número válido (0412/0414/0424)</div>
+                </div>
+
+                <div class="input-group">
+                    <div class="input-title">Correo electrónico (opcional)</div>
+                    <input type="email" placeholder="Ej: correo@ejemplo.com" id="email">
+                    <div id="email-error" class="error-message">Por favor ingrese un correo válido</div>
+                </div>
+                
+                <button onclick="validarPagina2()">
+                    <i class="fas fa-arrow-right"></i> Continuar
+                </button>
+            </div>
+        </div>
+
+        <!-- Página 3 - Confirmación -->
+        <div id="page3" class="page">
+            <div class="card">
+                <h2>Confirmación de Transacción</h2>
+                
+                <div class="seccion-resumen">
+                    <div class="resumen-titulo">Detalles del Intercambio</div>
+                    <div class="resumen-item">
+                        <span>WLD a enviar:</span>
+                        <span class="resumen-valor" id="resumen-monedas"></span>
+                    </div>
+                    <div class="resumen-item">
+                        <span>Precio WLD (USD):</span>
+                        <span class="resumen-valor" id="resumen-precio-wld"></span>
+                    </div>
+                    <div class="resumen-item">
+                        <span>Valor en USD:</span>
+                        <span class="resumen-valor" id="resumen-valor-usd"></span>
+                    </div>
+                    <div class="resumen-item">
+                        <span>Comisión (USD):</span>
+                        <span class="resumen-valor" id="resumen-comision"></span>
+                    </div>
+                    <div class="resumen-item">
+                        <span>Total USD después de comisión:</span>
+                        <span class="resumen-valor" id="resumen-total-usd"></span>
+                    </div>
+                    <div class="resumen-item" style="border-bottom: none;">
+                        <span>Total a recibir (Bs.):</span>
+                        <span class="resumen-valor" id="resumen-bolivares"></span>
+                    </div>
+                </div>
+                
+                <div class="seccion-resumen">
+                    <div class="resumen-titulo">Datos del Remitente</div>
+                    <div class="resumen-item">
+                        <span>Nombre completo:</span>
+                        <span class="resumen-valor" id="resumen-nombre-remitente"></span>
+                    </div>
+                    <div class="resumen-item">
+                        <span>Cédula:</span>
+                        <span class="resumen-valor" id="resumen-cedula-remitente"></span>
+                    </div>
+                    <div class="resumen-item">
+                        <span>Relación con destinatario:</span>
+                        <span class="resumen-valor" id="resumen-relacion"></span>
+                    </div>
+                </div>
+                
+                <div class="seccion-resumen">
+                    <div class="resumen-titulo">Datos del Destinatario</div>
+                    <div class="resumen-item">
+                        <span>Nombre completo:</span>
+                        <span class="resumen-valor" id="resumen-nombre"></span>
+                    </div>
+                    <div class="resumen-item">
+                        <span>Cédula:</span>
+                        <span class="resumen-valor" id="resumen-cedula"></span>
+                    </div>
+                    <div class="resumen-item">
+                        <span>Teléfono pago móvil:</span>
+                        <span class="resumen-valor" id="resumen-telefono"></span>
+                    </div>
+                    <div class="resumen-item">
+                        <span>Correo electrónico:</span>
+                        <span class="resumen-valor" id="resumen-email"></span>
+                    </div>
+                    <div class="resumen-item">
+                        <span>Banco seleccionado:</span>
+                        <span class="resumen-valor" id="resumen-banco"></span>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <div class="terms-title">Términos y Condiciones</div>
+                    <div class="terms-container">
+                        <p><strong>1. Aceptación:</strong> Al utilizar este servicio, usted acepta cumplir con estos términos y nuestra política de privacidad, así como con lo establecido en la Gaceta Oficial 43.098 del 31 de marzo de 2025.</p>
+                        <p><strong>2. Servicio:</strong> WorldCoin Exchange proporciona intercambio de WLD a VES sujeto a disponibilidad.</p>
+                        <p><strong>3. Tasas:</strong> Comisiones variables según monto: 3% hasta $5, $1 fijo hasta $50, $2 fijo para montos mayores.</p>
+                        <p><strong>4. Responsabilidades:</strong> Usted es responsable de proporcionar información veraz y verificar los datos antes de confirmar. Todos los remitentes y destinatarios deben ser correctamente identificados según normativa vigente.</p>
+                        <p><strong>5. Pagos:</strong> Los pagos se procesarán una vez recibida confirmación de la transferencia, dentro de 24 horas hábiles.</p>
+                        <p><strong>6. Regulaciones:</strong> Este servicio cumple con las regulaciones establecidas en la Gaceta Oficial 43.098 para transacciones de criptoactivos en Venezuela.</p>
+                    </div>
+                    <div class="terms-checkbox">
+                        <input type="checkbox" id="acceptTerms">
+                        <label for="acceptTerms">Acepto los términos y condiciones y la normativa de la Gaceta 43.098</label>
+                    </div>
+                    <div id="terms-error" class="error-message">Debe aceptar los términos y condiciones</div>
+                </div>
+                
+                <button onclick="validarPagina3()">
+                    <i class="fas fa-check-circle"></i> Confirmar Transacción
+                </button>
+            </div>
+        </div>
+
+        <!-- Página 5 - Historial -->
+        <div id="page5" class="page">
+            <div class="card">
+                <h2>Historial de Transacciones</h2>
+                
+                <div id="historialContent" style="margin-top: 15px;">
+                    <!-- Aquí se mostrará el historial de transacciones -->
+                </div>
+                
+                <button onclick="showPage(1)" style="margin-top: 20px; background: #6c757d;">
+                    <i class="fas fa-home"></i> Volver al Inicio
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de bancos venezolanos -->
+    <div id="bancosModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="cerrarModalBancos()">&times;</span>
+            <h3 style="color: #800020; text-align: center; margin-bottom: 20px;">Seleccione su banco</h3>
+            
+            <div id="bancoPage1" class="banco-page active">
+                <div class="banco-option" onclick="seleccionarBanco('0102', 'Banco de Venezuela')">
+                    <div class="banco-code">0102</div>
+                    <span>Banco de Venezuela</span>
+                </div>
+                
+                <div class="banco-option" onclick="seleccionarBanco('0104', 'Venezolano de Crédito')">
+                    <div class="banco-code">0104</div>
+                    <span>Venezolano de Crédito</span>
+                </div>
+                
+                <div class="banco-option" onclick="seleccionarBanco('0105', 'Banco Mercantil')">
+                    <div class="banco-code">0105</div>
+                    <span>Banco Mercantil</span>
+                </div>
+                
+                <div class="banco-option" onclick="seleccionarBanco('0108', 'Banco Provincial')">
+                    <div class="banco-code">0108</div>
+                    <span>Banco Provincial</span>
+                </div>
+                
+                <div class="banco-option" onclick="seleccionarBanco('0114', 'Bancaribe')">
+                    <div class="banco-code">0114</div>
+                    <span>Bancaribe</span>
+                </div>
+                
+                <div class="banco-option" onclick="seleccionarBanco('0115', 'Banco Exterior')">
+                    <div class="banco-code">0115</div>
+                    <span>Banco Exterior</span>
+                </div>
+                
+                <div class="banco-option" onclick="seleccionarBanco('0116', 'Banco Occidental de Descuento')">
+                    <div class="banco-code">0116</div>
+                    <span>Banco Occidental de Descuento</span>
+                </div>
+                
+                <div class="banco-option" onclick="seleccionarBanco('0128', 'Banco Caroní')">
+                    <div class="banco-code">0128</div>
+                    <span>Banco Caroní</span>
+                </div>
+                
+                <div class="banco-option" onclick="seleccionarBanco('0134', 'Banesco')">
+                    <div class="banco-code">0134</div>
+                    <span>Banesco</span>
+                </div>
+                
+                <div class="banco-option" onclick="seleccionarBanco('0137', 'Banco Sofitasa')">
+                    <div class="banco-code">0137</div>
+                    <span>Banco Sofitasa</span>
+                </div>
+                
+                <div class="banco-option" onclick="seleccionarBanco('0138', 'Banco Plaza')">
+                    <div class="banco-code">0138</div>
+                    <span>Banco Plaza</span>
+                </div>
+                
+                <div class="banco-option" onclick="seleccionarBanco('0146', 'Banco de la Gente Emprendedora')">
+                    <div class="banco-code">0146</div>
+                    <span>Banco de la Gente Emprendedora</span>
+                </div>
+                
+                <div class="banco-option" onclick="seleccionarBanco('0151', 'BFC Banco Fondo Común')">
+                    <div class="banco-code">0151</div>
+                    <span>BFC Banco Fondo Común</span>
+                </div>
+                
+                <div class="banco-option" onclick="seleccionarBanco('0156', '100% Banco')">
+                    <div class="banco-code">0156</div>
+                    <span>100% Banco</span>
+                </div>
+                
+                <div class="banco-option" onclick="seleccionarBanco('0157', 'DelSur Banco Universal')">
+                    <div class="banco-code">0157</div>
+                    <span>DelSur Banco Universal</span>
+                </div>
+                
+                <div class="banco-option" onclick="seleccionarBanco('0163', 'Banco del Tesoro')">
+                    <div class="banco-code">0163</div>
+                    <span>Banco del Tesoro</span>
+                </div>
+                
+                <div class="banco-option" onclick="seleccionarBanco('0166', 'Banco Agrícola de Venezuela')">
+                    <div class="banco-code">0166</div>
+                    <span>Banco Agrícola de Venezuela</span>
+                </div>
+                
+                <div class="banco-option" onclick="seleccionarBanco('0168', 'Bancrecer')">
+                    <div class="banco-code">0168</div>
+                    <span>Bancrecer</span>
+                </div>
+                
+                <div class="banco-option" onclick="seleccionarBanco('0169', 'Mi Banco')">
+                    <div class="banco-code">0169</div>
+                    <span>Mi Banco</span>
+                </div>
+                
+                <div class="banco-option" onclick="seleccionarBanco('0171', 'Banco Activo')">
+                    <div class="banco-code">0171</div>
+                    <span>Banco Activo</span>
+                </div>
+                
+                <div class="banco-option" onclick="seleccionarBanco('0172', 'Bancamiga')">
+                    <div class="banco-code">0172</div>
+                    <span>Bancamiga</span>
+                </div>
+                
+                <div class="banco-option" onclick="seleccionarBanco('0173', 'Banco Internacional de Desarrollo')">
+                    <div class="banco-code">0173</div>
+                    <span>Banco Internacional de Desarrollo</span>
+                </div>
+                
+                <div class="banco-option" onclick="seleccionarBanco('0174', 'Banplus')">
+                    <div class="banco-code">0174</div>
+                    <span>Banplus</span>
+                </div>
+                
+                <div class="banco-option" onclick="seleccionarBanco('0175', 'Banco Bicentenario')">
+                    <div class="banco-code">0175</div>
+                    <span>Banco Bicentenario</span>
+                </div>
+                
+                <div class="banco-option" onclick="seleccionarBanco('0176', 'Banco de la Fuerza Armada Nacional Bolivariana')">
+                    <div class="banco-code">0176</div>
+                    <span>Banco de la FANB</span>
+                </div>
+                
+                <div class="banco-option" onclick="seleccionarBanco('0177', 'Banco de Exportación y Comercio')">
+                    <div class="banco-code">0177</div>
+                    <span>Banco de Exportación y Comercio</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de relación con destinatario -->
+    <div id="relacionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="cerrarModalRelacion()">&times;</span>
+            <h3 style="color: #800020; text-align: center; margin-bottom: 20px;">Seleccione relación con destinatario</h3>
+            
+            <div class="banco-option" onclick="seleccionarRelacion('Padre/Madre', 'Padre/Madre')">
+                <span>Padre/Madre</span>
+            </div>
+            
+            <div class="banco-option" onclick="seleccionarRelacion('Hijo/Hija', 'Hijo/Hija')">
+                <span>Hijo/Hija</span>
+            </div>
+            
+            <div class="banco-option" onclick="seleccionarRelacion('Hermano/Hermana', 'Hermano/Hermana')">
+                <span>Hermano/Hermana</span>
+            </div>
+            
+            <div class="banco-option" onclick="seleccionarRelacion('Abuelo/Abuela', 'Abuelo/Abuela')">
+                <span>Abuelo/Abuela</span>
+            </div>
+            
+            <div class="banco-option" onclick="seleccionarRelacion('Nieto/Nieta', 'Nieto/Nieta')">
+                <span>Nieto/Nieta</span>
+            </div>
+            
+            <div class="banco-option" onclick="seleccionarRelacion('Tío/Tía', 'Tío/Tía')">
+                <span>Tío/Tía</span>
+            </div>
+            
+            <div class="banco-option" onclick="seleccionarRelacion('Sobrino/Sobrina', 'Sobrino/Sobrina')">
+                <span>Sobrino/Sobrina</span>
+            </div>
+            
+            <div class="banco-option" onclick="seleccionarRelacion('Primo/Prima', 'Primo/Prima')">
+                <span>Primo/Prima</span>
+            </div>
+            
+            <div class="banco-option" onclick="seleccionarRelacion('Amigo/Amiga', 'Amigo/Amiga')">
+                <span>Amigo/Amiga</span>
+            </div>
+            
+            <div class="banco-option" onclick="seleccionarRelacion('Conocido', 'Conocido')">
+                <span>Conocido</span>
+            </div>
+            
+            <div class="banco-option" onclick="seleccionarRelacion('Otro', 'Otro')">
+                <span>Otro</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navegación Inferior -->
+    <div class="nav-icons">
+        <div class="nav-icon" onclick="showPage(1)">
+            <i class="fas fa-home"></i><br>Inicio
+        </div>
+        <div class="nav-icon" onclick="showPage(5)">
+            <i class="fas fa-history"></i><br>Historial
+        </div>
+        <div class="nav-icon" onclick="window.open('https://wa.me/573236062784')">
+            <i class="fab fa-whatsapp"></i><br>Soporte
+        </div>
+        <div class="nav-icon" onclick="mostrarAyuda()">
+            <i class="fas fa-question-circle"></i><br>Ayuda
+        </div>
+    </div>
+
+    <script>
+        // Configuración
+        const WHATSAPP_NUMBER = "573236062784";
+        const HISTORIAL_KEY = "worldcoin_exchange_historial";
+        const USER_DATA_KEY = "worldcoin_user_data";
+        const BINANCE_API_KEY = "RGIFA4mBEHXcSSf9UL6ykflasyrPHtEQ5Za4VzIWPFkgTetsMyZY1IswWW4RXGxC";
+        const BINANCE_SECRET_KEY = "0fJC86aMJT8fNvotyJ5S30Oq8WaOccCUKvaT1DkwZ2C6RDh4ZayAglCLg1CrmyFL";
+
+        // Variables globales
+        let tasaDolar = 0; // Tasa de conversión USD a Bs. (del panel de control)
+        let precioWLDUSD = 0; // Precio actual de WLD en USD desde Binance
+        let bancoSeleccionado = null;
+        let relacionSeleccionada = null;
+        let historial = [];
+        let userData = {};
+
+        // Función para sanitizar inputs
+        function sanitizeInput(input) {
+            const div = document.createElement('div');
+            div.textContent = input;
+            return div.innerHTML;
+        }
+
+        // Función para encriptar datos
+        function encryptData(data) {
+            try {
+                return btoa(encodeURIComponent(JSON.stringify(data)));
+            } catch (e) {
+                console.error("Error encriptando datos:", e);
+                return null;
+            }
+        }
+
+        // Función para desencriptar datos
+        function decryptData(encrypted) {
+            try {
+                return JSON.parse(decodeURIComponent(atob(encrypted)));
+            } catch (e) {
+                console.error("Error desencriptando datos:", e);
+                return null;
+            }
+        }
+
+        // Cargar datos del usuario si existen
+        function loadUserData() {
+            const encryptedData = localStorage.getItem(USER_DATA_KEY);
+            if (encryptedData) {
+                const data = decryptData(encryptedData);
+                if (data) {
+                    userData = data;
+                    document.getElementById('nombre-remitente').value = data.nombreRemitente || '';
+                    document.getElementById('cedula-remitente').value = data.cedulaRemitente || '';
+                    document.getElementById('nombre').value = data.nombre || '';
+                    document.getElementById('cedula').value = data.cedula || '';
+                    document.getElementById('telefono').value = data.telefono || '';
+                    document.getElementById('email').value = data.email || '';
+                    
+                    if (data.relacion) {
+                        relacionSeleccionada = { text: data.relacion };
+                        document.getElementById('selectedRelacionText').textContent = data.relacion;
+                        document.getElementById('selectedRelacion').style.display = 'block';
+                    }
+                }
+            }
+        }
+
+        // Guardar datos del usuario
+        function saveUserData() {
+            userData = {
+                nombreRemitente: document.getElementById('nombre-remitente').value,
+                cedulaRemitente: document.getElementById('cedula-remitente').value,
+                relacion: relacionSeleccionada ? relacionSeleccionada.text : null,
+                nombre: document.getElementById('nombre').value,
+                cedula: document.getElementById('cedula').value,
+                telefono: document.getElementById('telefono').value,
+                email: document.getElementById('email').value
+            };
+            const encryptedData = encryptData(userData);
+            if (encryptedData) {
+                localStorage.setItem(USER_DATA_KEY, encryptedData);
+            }
+        }
+
+        // Calcular comisión en USD
+        function calcularComision(valorUSD) {
+            if (valorUSD <= 5) {
+                return valorUSD * 0.03; // 3% para montos hasta $5
+            } else if (valorUSD <= 50) {
+                return 1; // $1 fijo para montos hasta $50
+            } else {
+                return 2; // $2 fijo para montos mayores a $50
+            }
+        }
+
+        // Obtener precio de WLD en USD desde Binance y tasa del panel de control
+        async function actualizarTasas() {
+            try {
+                // Obtener precio de WLD desde Binance
+                const response = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=WLDUSDT');
+                const data = await response.json();
+                precioWLDUSD = parseFloat(data.price);
+                
+                // Obtener tasa del panel de control o usar valor por defecto
+                const tasaManual = localStorage.getItem("worldcoin_tasa_manual");
+                tasaDolar = tasaManual ? parseFloat(tasaManual) : 100; // Valor por defecto si no hay tasa configurada
+                
+                // Actualizar UI con las tasas
+                document.getElementById('tasaActualContainer').innerHTML = 
+                    `<i class="fas fa-chart-line"></i> Tasa actual: 1 USD = ${tasaDolar.toFixed(2)} Bs. | 1 WLD = ${precioWLDUSD.toFixed(4)} USD`;
+                
+                return true;
+            } catch (error) {
+                console.error("Error al obtener tasas:", error);
+                // Valores por defecto en caso de error
+                precioWLDUSD = 0.699;
+                tasaDolar = 100;
+                document.getElementById('tasaActualContainer').innerHTML = 
+                    `<i class="fas fa-exclamation-triangle"></i> Tasa actual: 1 USD = ${tasaDolar.toFixed(2)} Bs. | 1 WLD = ${precioWLDUSD.toFixed(4)} USD (valores predeterminados)`;
+                return false;
+            }
+        }
+
+        // Calcular en tiempo real
+        document.getElementById('monedas').addEventListener('input', function(e) {
+            const cantidad = parseFloat(e.target.value) || 0;
+            const valorUSD = cantidad * precioWLDUSD;
+            const comisionUSD = calcularComision(valorUSD);
+            const totalUSD = valorUSD - comisionUSD;
+            const totalBs = totalUSD * tasaDolar;
+            
+            document.getElementById('bolivares').value = totalBs > 0 ? totalBs.toLocaleString('es-VE', {
+                style: 'currency',
+                currency: 'VES',
+                minimumFractionDigits: 2
+            }) : "0,00 Bs.";
+        });
+
+        // Navegación entre páginas
+        function showPage(pageNumber) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active-page');
+            });
+            document.getElementById(`page${pageNumber}`).classList.add('active-page');
+            
+            if (pageNumber === 5) {
+                cargarHistorial();
+            }
+            
+            if (pageNumber === 3) {
+                cargarResumen();
+            }
+        }
+
+        // Cargar resumen en página de confirmación
+        function cargarResumen() {
+            const cantidad = parseFloat(document.getElementById('monedas').value) || 0;
+            const valorUSD = cantidad * precioWLDUSD;
+            const comisionUSD = calcularComision(valorUSD);
+            const totalUSD = valorUSD - comisionUSD;
+            const totalBs = totalUSD * tasaDolar;
+            
+            document.getElementById('resumen-monedas').textContent = cantidad + ' WLD';
+            document.getElementById('resumen-precio-wld').textContent = precioWLDUSD.toFixed(4) + ' USD';
+            document.getElementById('resumen-valor-usd').textContent = valorUSD.toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 2
+            });
+            document.getElementById('resumen-comision').textContent = comisionUSD.toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 2
+            });
+            document.getElementById('resumen-total-usd').textContent = totalUSD.toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 2
+            });
+            document.getElementById('resumen-bolivares').textContent = totalBs > 0 ? totalBs.toLocaleString('es-VE', {
+                style: 'currency',
+                currency: 'VES',
+                minimumFractionDigits: 2
+            }) : "0,00 Bs.";
+            
+            // Datos del remitente
+            document.getElementById('resumen-nombre-remitente').textContent = sanitizeInput(document.getElementById('nombre-remitente').value);
+            document.getElementById('resumen-cedula-remitente').textContent = sanitizeInput(document.getElementById('cedula-remitente').value);
+            document.getElementById('resumen-relacion').textContent = relacionSeleccionada ? sanitizeInput(relacionSeleccionada.text) : 'No especificada';
+            
+            // Datos del destinatario
+            document.getElementById('resumen-nombre').textContent = sanitizeInput(document.getElementById('nombre').value);
+            document.getElementById('resumen-cedula').textContent = sanitizeInput(document.getElementById('cedula').value);
+            document.getElementById('resumen-telefono').textContent = sanitizeInput(document.getElementById('telefono').value);
+            document.getElementById('resumen-email').textContent = sanitizeInput(document.getElementById('email').value) || 'No proporcionado';
+            document.getElementById('resumen-banco').textContent = bancoSeleccionado ? sanitizeInput(bancoSeleccionado.text) : 'No seleccionado';
+        }
+
+        // Validación página 1
+        function validarPagina1() {
+            const monedas = document.getElementById('monedas').value;
+            const monedasError = document.getElementById('monedas-error');
+            
+            if (!monedas || isNaN(monedas) || parseFloat(monedas) <= 0) {
+                document.getElementById('monedas').classList.add('error-input');
+                monedasError.style.display = 'block';
+                return;
+            }
+            
+            if (!bancoSeleccionado) {
+                alert('Por favor seleccione un banco para pago móvil');
+                return;
+            }
+            
+            document.getElementById('monedas').classList.remove('error-input');
+            monedasError.style.display = 'none';
+            showPage(2);
+        }
+
+        // Validación página 2
+        function validarPagina2() {
+            const nombreRemitente = document.getElementById('nombre-remitente').value;
+            const cedulaRemitente = document.getElementById('cedula-remitente').value;
+            const nombre = document.getElementById('nombre').value;
+            const cedula = document.getElementById('cedula').value;
+            const telefono = document.getElementById('telefono').value;
+            const email = document.getElementById('email').value;
+            
+            const nombreRemitenteError = document.getElementById('nombre-remitente-error');
+            const cedulaRemitenteError = document.getElementById('cedula-remitente-error');
+            const nombreError = document.getElementById('nombre-error');
+            const cedulaError = document.getElementById('cedula-error');
+            const telefonoError = document.getElementById('telefono-error');
+            const emailError = document.getElementById('email-error');
+            
+            let isValid = true;
+            
+            // Validar nombre completo del remitente
+            const nombreRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]{3,}(?:\s+[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ]{3,})+$/;
+            if (!nombreRemitente || !nombreRegex.test(nombreRemitente)) {
+                document.getElementById('nombre-remitente').classList.add('error-input');
+                nombreRemitenteError.style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('nombre-remitente').classList.remove('error-input');
+                nombreRemitenteError.style.display = 'none';
+            }
+            
+            // Validar cédula del remitente
+            const cedulaRegex = /^[VEve]?[-]?[0-9]{8,}$/;
+            if (!cedulaRemitente || !cedulaRegex.test(cedulaRemitente) || cedulaRemitente.replace(/[^0-9]/g, '').length < 8) {
+                document.getElementById('cedula-remitente').classList.add('error-input');
+                cedulaRemitenteError.style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('cedula-remitente').classList.remove('error-input');
+                cedulaRemitenteError.style.display = 'none';
+            }
+            
+            // Validar relación con destinatario
+            if (!relacionSeleccionada) {
+                alert('Por favor seleccione su relación con el destinatario');
+                isValid = false;
+            }
+            
+            // Validar nombre completo del destinatario
+            if (!nombre || !nombreRegex.test(nombre)) {
+                document.getElementById('nombre').classList.add('error-input');
+                nombreError.style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('nombre').classList.remove('error-input');
+                nombreError.style.display = 'none';
+            }
+            
+            // Validar cédula del destinatario
+            if (!cedula || !cedulaRegex.test(cedula) || cedula.replace(/[^0-9]/g, '').length < 8) {
+                document.getElementById('cedula').classList.add('error-input');
+                cedulaError.style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('cedula').classList.remove('error-input');
+                cedulaError.style.display = 'none';
+            }
+            
+            // Validar teléfono
+            const telefonoRegex = /^(0412|0414|0424|0416|0426|0416|0234|0241|0251)[-]?[0-9]{7}$/;
+            if (!telefono || !telefonoRegex.test(telefono)) {
+                document.getElementById('telefono').classList.add('error-input');
+                telefonoError.style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('telefono').classList.remove('error-input');
+                telefonoError.style.display = 'none';
+            }
+            
+            // Validar email si fue proporcionado
+            if (email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    document.getElementById('email').classList.add('error-input');
+                    emailError.style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('email').classList.remove('error-input');
+                    emailError.style.display = 'none';
+                }
+            }
+            
+            if (isValid) {
+                saveUserData();
+                showPage(3);
+            }
+        }
+
+        // Validación página 3
+        function validarPagina3() {
+            const termsError = document.getElementById('terms-error');
+            const termsAccepted = document.getElementById('acceptTerms').checked;
+            
+            if (!termsAccepted) {
+                termsError.style.display = 'block';
+                return;
+            }
+            
+            termsError.style.display = 'none';
+            finalizarTransaccion();
+        }
+
+        // Finalizar transacción
+        function finalizarTransaccion() {
+            const nombreRemitente = document.getElementById('nombre-remitente').value;
+            const cedulaRemitente = document.getElementById('cedula-remitente').value;
+            const relacion = relacionSeleccionada ? relacionSeleccionada.text : 'No especificada';
+            const nombre = document.getElementById('nombre').value;
+            const monedas = document.getElementById('monedas').value;
+            const bolivares = document.getElementById('bolivares').value;
+            const cedula = document.getElementById('cedula').value;
+            const telefono = document.getElementById('telefono').value;
+            const email = document.getElementById('email').value || 'No proporcionado';
+
+            // Calcular valores para el historial
+            const cantidad = parseFloat(monedas) || 0;
+            const valorUSD = cantidad * precioWLDUSD;
+            const comisionUSD = calcularComision(valorUSD);
+            const totalUSD = valorUSD - comisionUSD;
+            const totalBs = totalUSD * tasaDolar;
+
+            // Guardar en historial
+            const transaccion = {
+                fecha: new Date().toLocaleString(),
+                monedas: monedas,
+                precioWLDUSD: precioWLDUSD,
+                valorUSD: valorUSD,
+                comisionUSD: comisionUSD,
+                totalUSD: totalUSD,
+                tasaDolar: tasaDolar,
+                bolivares: totalBs.toLocaleString('es-VE', {
+                    style: 'currency',
+                    currency: 'VES',
+                    minimumFractionDigits: 2
+                }),
+                nombreRemitente: nombreRemitente,
+                cedulaRemitente: cedulaRemitente,
+                relacion: relacion,
+                nombre: nombre,
+                cedula: cedula,
+                telefono: telefono,
+                email: email,
+                banco: bancoSeleccionado.text
+            };
+            
+            // Cargar historial existente
+            const encryptedHistorial = localStorage.getItem(HISTORIAL_KEY);
+            if (encryptedHistorial) {
+                historial = decryptData(encryptedHistorial) || [];
+            }
+            
+            historial.unshift(transaccion);
+            localStorage.setItem(HISTORIAL_KEY, encryptData(historial));
+            
+            // Preparar mensaje para WhatsApp
+            const mensajeWhatsApp = `✅ *Nueva Transacción WorldCoin Exchange* ✅
+            
+📌 *Detalles del Intercambio:*
+🔹 WLD enviados: ${monedas}
+🔹 Precio WLD: ${precioWLDUSD.toFixed(4)} USD
+🔹 Valor en USD: ${valorUSD.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}
+🔹 Comisión: ${comisionUSD.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}
+🔹 Total USD después de comisión: ${totalUSD.toLocaleString('en-US', {style: 'currency', currency: 'USD'})}
+🔹 Tasa aplicada: ${tasaDolar.toFixed(2)} Bs. por USD
+🔹 Total a recibir: ${bolivares}
+
+👤 *Datos del Remitente:*
+🔹 Nombre: ${nombreRemitente}
+🔹 Cédula: ${cedulaRemitente}
+🔹 Relación con destinatario: ${relacion}
+
+👤 *Datos del Destinatario:*
+🔹 Nombre: ${nombre}
+🔹 Cédula: ${cedula}
+🔹 Teléfono: ${telefono}
+🔹 Email: ${email}
+🔹 Banco seleccionado: ${bancoSeleccionado.text}
+
+📅 Fecha: ${new Date().toLocaleString()}
+
+ℹ️ _El pago será procesado en las próximas 24 horas según lo establecido en la Gaceta Oficial 43.098._`;
+
+            // Abrir WhatsApp con el mensaje
+            const urlWhatsApp = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensajeWhatsApp)}`;
+            window.open(urlWhatsApp, '_blank');
+            
+            // Mostrar mensaje de éxito
+            alert('Transacción completada con éxito!\n\nSe ha abierto WhatsApp para enviar los detalles.\n\nEl pago será procesado en las próximas 24 horas según lo establecido en la Gaceta Oficial 43.098.');
+            
+            // Volver a la página de inicio
+            showPage(1);
+            
+            // Limpiar formulario
+            document.getElementById('monedas').value = '';
+            document.getElementById('bolivares').value = '';
+            document.getElementById('acceptTerms').checked = false;
+            bancoSeleccionado = null;
+            relacionSeleccionada = null;
+            document.getElementById('selectedBanco').style.display = 'none';
+            document.getElementById('selectedRelacion').style.display = 'none';
+        }
+
+        // Cargar historial
+        function cargarHistorial() {
+            const encryptedHistorial = localStorage.getItem(HISTORIAL_KEY);
+            if (encryptedHistorial) {
+                historial = decryptData(encryptedHistorial) || [];
+            }
+            
+            const historialContent = document.getElementById('historialContent');
+            
+            if (historial.length === 0) {
+                historialContent.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">No hay transacciones registradas</p>';
+                return;
+            }
+            
+            let html = '';
+            historial.forEach(trans => {
+                html += `
+                    <div class="transaccion-item">
+                        <div>
+                            <div class="transaccion-fecha">${trans.fecha}</div>
+                            <div>${sanitizeInput(trans.nombreRemitente)} → ${sanitizeInput(trans.nombre)}</div>
+                            <small>${sanitizeInput(trans.relacion)} | ${sanitizeInput(trans.banco)} - ${sanitizeInput(trans.telefono)}</small>
+                        </div>
+                        <div class="transaccion-monto">
+                            ${trans.monedas} WLD → ${trans.bolivares}
+                            <div style="font-size: 12px; color: #666;">${trans.precioWLDUSD ? trans.precioWLDUSD.toFixed(4) + ' USD/WLD' : 'N/A'}</div>
+                            <div style="font-size: 12px; color: #666;">Tasa: ${trans.tasaDolar ? trans.tasaDolar.toFixed(2) + ' Bs/USD' : 'N/A'}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            historialContent.innerHTML = html;
+        }
+
+        // Mostrar ayuda
+        function mostrarAyuda() {
+            alert('Ayuda:\n\n1. Ingrese la cantidad de WLD que desea vender\n2. Seleccione su banco para el pago móvil\n3. Complete los datos del remitente y destinatario\n4. Seleccione la relación entre remitente y destinatario\n5. Verifique toda la información antes de confirmar\n\nPara soporte técnico contacte a nuestro equipo por WhatsApp');
+        }
+
+        // Bancos venezolanos
+        function mostrarModalBancos() {
+            document.getElementById('bancosModal').style.display = 'flex';
+        }
+
+        function cerrarModalBancos() {
+            document.getElementById('bancosModal').style.display = 'none';
+        }
+
+        function seleccionarBanco(id, text) {
+            bancoSeleccionado = { id, text };
+            document.getElementById('selectedBancoText').textContent = text;
+            document.getElementById('selectedBanco').style.display = 'block';
+            cerrarModalBancos();
+        }
+
+        // Relación con destinatario
+        function mostrarModalRelacion() {
+            document.getElementById('relacionModal').style.display = 'flex';
+        }
+
+        function cerrarModalRelacion() {
+            document.getElementById('relacionModal').style.display = 'none';
+        }
+
+        function seleccionarRelacion(id, text) {
+            relacionSeleccionada = { id, text };
+            document.getElementById('selectedRelacionText').textContent = text;
+            document.getElementById('selectedRelacion').style.display = 'block';
+            cerrarModalRelacion();
+        }
+
+        // Formatear cédula automáticamente
+        document.getElementById('cedula-remitente').addEventListener('input', function(e) {
+            let value = e.target.value.toUpperCase();
+            
+            if (/^[VE]/.test(value)) {
+                if (value.length > 1 && value[1] !== '-') {
+                    value = value[0] + '-' + value.substring(1);
+                }
+                value = value.substring(0, 10);
+            } else {
+                value = value.replace(/[^0-9]/g, '').substring(0, 8);
+            }
+            
+            e.target.value = value;
+        });
+
+        document.getElementById('cedula').addEventListener('input', function(e) {
+            let value = e.target.value.toUpperCase();
+            
+            if (/^[VE]/.test(value)) {
+                if (value.length > 1 && value[1] !== '-') {
+                    value = value[0] + '-' + value.substring(1);
+                }
+                value = value.substring(0, 10);
+            } else {
+                value = value.replace(/[^0-9]/g, '').substring(0, 8);
+            }
+            
+            e.target.value = value;
+        });
+
+        // Formatear teléfono automáticamente
+        document.getElementById('telefono').addEventListener('input', function(e) {
+            let value = e.target.value;
+            value = value.replace(/[^0-9]/g, '');
+            
+            if (value.length > 4) {
+                value = value.substring(0, 4) + '-' + value.substring(4, 11);
+            }
+            
+            e.target.value = value;
+        });
+
+        // Iniciar
+        loadUserData();
+        actualizarTasas();
+        
+        // Actualizar tasas cada 30 segundos
+        setInterval(actualizarTasas, 30000);
+    </script>
+</body>
+</html>
